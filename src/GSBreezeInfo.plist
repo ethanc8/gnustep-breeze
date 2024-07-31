@@ -1,0 +1,15 @@
+{
+	NSExecutable = "GSBreeze";
+	NSPrincipalClass = "GSBBreezeTheme";
+	GSThemeDescription="Breeze theme for GNUstep";
+	GSThemeName="Breeze";
+	GSThemeAuthors = (
+			"Ethan C"
+	);		       
+	GSThemeDetails = "Breeze theme for GNUstep";
+	GSThemeIcon = "breeze_icon_48.png";
+	GSThemeLicense = "LGPL-3.0-or-later";
+	GSThemeTiles = {
+	};
+	GSThemeVersion = "0.1";
+}
