@@ -88,8 +88,21 @@
     if(colorName) {
         NSLog(@"colorNamed: %@ state: %u", colorName, elementState);
     }
-    if([colorName isEqual: @"menuBorderColor"] || [colorName isEqual: @"menuBackgroundColor"] || [colorName isEqual: @"NSScrollView"]) {
-        return [super colorNamed: colorName state: elementState];
+    // These cause very weird segfaults when I run [systemColorNameToKDEMap objectForKey: colorName]
+    if([colorName isEqual: @"menuBorderColor"] || [colorName isEqual: @"menuBackgroundColor"] || [colorName isEqual: @"NSScrollView"] || [colorName isEqual: @"NSMenuItem"] || [colorName isEqual: @"menuItemBackgroundColor"] || [colorName isEqual: @"GSMenuBar"] || [colorName isEqual: @"NSScrollView"] || [colorName isEqual: @"GSScrollerVerticalKnob"]) {
+        return [NSColor redColor];
+        NSDictionary* colorMapping = extraNormalColorNameToKDEMap[colorName];
+        if(!colorMapping) {
+            return [super colorNamed: colorName state: elementState];
+        }
+        NSLog(@"returning color with mapping %@", colorMapping);
+        NSString* colorString = kdeglobals[colorMapping[@"category"]][colorMapping[@"key"]];
+        NSLog(@"returning color %@", colorString);
+        NSArray<NSString*>* colorStringRGB = [colorString componentsSeparatedByString: @","];
+        return [NSColor colorWithRed: colorStringRGB[0].doubleValue / 256
+                               green: colorStringRGB[1].doubleValue / 256
+                                blue: colorStringRGB[2].doubleValue / 256
+                               alpha: 1.0];
     }
     if([systemColorNameToKDEMap objectForKey: colorName]) {
         NSDictionary* colorMapping = systemColorNameToKDEMap[colorName];
