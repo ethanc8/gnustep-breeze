@@ -8,8 +8,15 @@
     NSDictionary* extraNormalColorNameToKDEMap;
     NSColorList* colorList;
 }
-- (void) activate {
-    NSLog(@"-[GSBBreezeTheme activate]");
+- (instancetype) initWithBundle: (NSBundle *)bundle {
+    NSLog(@"-[GSBBreezeTheme initWithBundle: %@] begin", bundle);
+    [super initWithBundle: bundle];
+    NSLog(@"-[GSBBreezeTheme initWithBundle: %@] super initialized", bundle);
+    // NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    // [center addObserver: self
+    //            selector: @selector(GSThemeWillActivateNotification_response)
+    //                name: GSThemeWillActivateNotification
+    //              object: nil];
     systemColorNameToKDEMap = @{
         @"alternateRowBackgroundColor": @{@"category": @"Colors:View", @"key": @"BackgroundAlternate"},
         @"alternateSelectedControlColor": @{@"category": @"Colors:Selection", @"key": @"BackgroundAlternate"},
@@ -68,10 +75,12 @@
         @"highlightedTableRowBackgroundColor": @{@"category": @"Colors:Selection", @"key": @"BackgroundNormal"},
         @"highlightedTableRowTextColor": @{@"category": @"Colors:Selection", @"key": @"ForegroundNormal"},
     };
+    NSLog(@"-[GSBBreezeTheme initWithBundle: %@] variables initialized", bundle);
     NSLog(@"%@", systemColorNameToKDEMap);
     NSDictionary* environment = [[NSProcessInfo processInfo] environment];
     kdeglobals = INIDictionaryForINIAtPath([environment[@"HOME"] stringByAppendingString: @"/.config/kdeglobals"]);
-    [super activate];
+    NSLog(@"-[GSBBreezeTheme initWithBundle: %@] end", bundle);
+    return self;
 }
 
 - (NSColor*) colorNamed: (NSString*)colorName
